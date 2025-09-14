@@ -6,7 +6,7 @@ tags:
   - filtering
 ---
 #### Notes
- Sensors are rarely accurate and as such a microcontroller will have to account for these imperfections with fine tuning. This fine tuning is known as **input conditioning**. 
+ Sensors are rarely accurate and as such a microcontroller will have to account for these imperfections with fine-tuning. This fine-tuning is known as **input conditioning**. 
 
 ##### Figure 2.3.1: Button bouncing.
 
@@ -15,7 +15,7 @@ Consider the figure above and the scenario of a button like input that has a bal
 
 This isn't the only scenario in which an input signal will capture multiple events when you only desire to capture the entirety of it. To ensure that we're handling this input we employ a tactic known as **button debouncing**. This task is a design consideration that eliminates the bouncing input signal. In **modern buttons** we can see input bouncing doesn't occur for more than 10-20ms at a time so most design patterns account for a **50ms Sampling Period** in their button debouncing design.
 
-**Filtering** is the more general term for plainly ignoring certain input events. In a general sense its common to ensure that a input signal is captured for two consecutive sampling periods. Filtering is a mitigation technique so consider the likelihood of a glitch to occur in your system. This won't completely eliminate the possibility of a glitch but should significantly reduce it if possible.
+**Filtering** is the more general term for plainly ignoring certain input events. In a general sense its common to ensure that an input signal is captured for two consecutive sampling periods. Filtering is a mitigation technique so consider the likelihood of a glitch to occur in your system. This won't completely eliminate the chance of a glitch but should significantly reduce it if possible.
 
 Filtering can be done in an inverse state as well. This means that we might consider two sample periods of a zero state before accepting that the state has changed to an off state.
 

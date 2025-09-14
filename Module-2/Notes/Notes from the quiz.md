@@ -1,8 +1,8 @@
-These are notes derived from take the quiz. I got 100% of the quiz but I noticed that some of the information wasn't found in the textbook so I wanted to aggregate it here to be searched.
+These are notes derived from take the quiz. I got 100% of the quiz, but I noticed that some of the information wasn't found in the textbook, so I wanted to aggregate it here to be searched.
 
 - Which of the following has a set of instruction codes which, when sent, activate some of their pins that are connected to a mechanical arm controller or a motor directly?
 	- Microcontroller
-	- This was in the textbook obviously. We're working with them.
+	- This was in the textbook, obviously. We're working with them.
 	- Microcontrollers are usually processors with hardware control features. They have a set of instruction codes which, when sent, activate some of their pins that are connected to a mechanical arm controller or a motor directly.
 
 - True or false: Embedded systems are contributing to a safer system of driving.
@@ -16,7 +16,7 @@ These are notes derived from take the quiz. I got 100% of the quiz but I noticed
 - When a programmer declares a variable to be volatile, which of the following occurs?
 	- It signals both the compiler and the developer that the value of this variable can change anytime and this can happen by means that are outside the normal flow of the application.
 	- When a programmer declares a variable to be volatile, it signals both the compiler and the developer that the value of this variable can change anytime and this can happen by means that are outside the normal flow of the application. The changes can be caused by a peripheral, another processor in a multiprocessor system, or an interrupt.
-	- Refer to [[Journal Notes]]
+	- Refer to [Journal Notes](./Journal%20Notes.md)
 
 - Which of the following enables the execution of concurrent tasks?
 	- Real time operating system (RTOS)
@@ -40,9 +40,9 @@ These are notes derived from take the quiz. I got 100% of the quiz but I noticed
 
 - Flash is what an embedded system embeds main application software into
 - Registers are used in a CPU to store information
-- RAM is an example of semiconductor memory in a computer (Refer to [[Journal Notes]])
+- RAM is an example of semiconductor memory in a computer (Refer to [Journal Notes](Journal%20Notes.md))
 
 - Which is the type of timer in which, after it is set, a handler routine is called and the timer gets re-inserted into the timer queue each time it expires?
 	- Periodic
 	- Periodic timers are used to keep track of repetitive tasks like polling or performing some activity periodically. After a periodic timer is set, each time it expires, a handler routine is called and the timer gets re-inserted into the timer queue.
-	- Refer to [[Section 2.7 Pulse width modulation]]
+	- Refer to [Section 2.7 Pulse width modulation](Section%202.7%20Pulse%20width%20modulation.md)
