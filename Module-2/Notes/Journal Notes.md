@@ -1,0 +1,10 @@
+In the weeks assignment we were asked to write about:
+- How is non-volatile memory different in an embedded system and a desktop system?
+- What are the differences between embedded systems and desktop systems?
+- What are the advantages of various embedded system architectures?
+
+Starting with how non-volatile memory is different in embedded vs desktop systems. I know already that various memory portions such as RAM are considered volatile. Non-volatile memory would be your hard drive. Both systems require a mixture of volatile and non-volatile memory to operate. Non-volatile memory in an desktop system needs more frequent read and write access than an embedded system. While both store their operating systems, firmware, logs, and some programs there isn't much more that is shared. Typically an embedded system will be deployed and will infrequently write to the non-volatile memory because most use cases of an embedded device utilize sensors and information to be stored in a volatile state. 
+
+The differences between an embedded system and desktop vary largely. Specially an embedded system can be found in any household appliance, tool, or entertainment system without the consumer knowing the technological components it contains. The user usually doesn't interact directly with the embedded device except through purpose driven peripheral that the system designers have identified. Desktop computers on the other hand are consumer driven completely with interchangeable peripherals, operating systems, and typically have a well designed user interface within the operating system.
+
+Some advantages of embedded system architectures is their purpose driven design. Resources are rarely wasted because the entire system has been designed around the application use case. Desktop computers need to have enough resources for various tasks the user could or could not undertake at any given time. An embedded system was designed to be underload and to mitigate costly allocations of resources.
