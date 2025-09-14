@@ -21,7 +21,7 @@ pwm18.start(0)
 
 This script appears to utilize the original configuration defined in module one for our breakout board. which can be observed below.
 
-<img src="./Resources/Turned On.jpg" alt="breakout board with LED turned on pin 18">
+<img src="./Resources/Turned On.jpg" alt="breakout board with LED turned on pin 18" width="500">
 
 #### Step One and a half
 This isn't a part of the official project guide, but I feel its a worthwhile step to employ and document. I realized that in this project document they want us to make changes directly on the Ubuntu Server OS with a terminal editor like nano or vim. I'd prefer to keep using my IDE, PyCharm, on my local device. The problem with that is getting a working development environment that can rapidly deploy tests on the remote Raspberry Pi with the breakout board.
@@ -32,7 +32,7 @@ This isn't a part of the official project guide, but I feel its a worthwhile ste
 
 2) Now Select your project drop down from the left hand list. Click "Python Interpreter". Select "Add Interpreter" on the right of the window followed by "On SSH" (Disregard the improper highlighting of "Add Local Interpreter").
 
-<img src="./Resources/Interpreter.png">
+<img src="./Resources/Interpreter.png" width="600">
 
 3) Fill in the host, port, username. Follow the guided prompt to finish adding the SSH connection and navigate to your python interpreter located on local device. On Ubuntu Server it's typically located at `/usr/bin/python3`.
 
