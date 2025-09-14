@@ -1,5 +1,3 @@
-This entry is lab notes on how the process of the pulse width modulation lab went. The lab guide can be found at [[CS 350 Milestone One PMW Lab Guide.pdf]].
-
 #### Milestone Objectives
 - Develop **code** for all the specified **functionality** of the PWM peripheral outlined in the Milestone One PWM Lab Guide.
 - Discuss the **questions** from the Milestone One PWM Lab Guide.
@@ -23,16 +21,21 @@ pwm18.start(0)
 
 This script appears to utilize the original configuration defined in module one for our breakout board. which can be observed below.
 
-![[Turned On.jpg]]
+<img src="./Resources/Turned On.jpg" alt="breakout board with LED turned on pin 18">
 
 #### Step One and a half
-This isn't apart of the official project guide, but I feel its a worthwhile step to employ and document. I realized that in this project document they want us to make changes directly on the Ubuntu Server OS with a terminal editor like nano or vim. I'd prefer to keep using my IDE, PyCharm, on my local device. The problem with that is getting a working development environment that can rapidly deploy tests on the remote Raspberry Pi with the breakout board.
+This isn't a part of the official project guide, but I feel its a worthwhile step to employ and document. I realized that in this project document they want us to make changes directly on the Ubuntu Server OS with a terminal editor like nano or vim. I'd prefer to keep using my IDE, PyCharm, on my local device. The problem with that is getting a working development environment that can rapidly deploy tests on the remote Raspberry Pi with the breakout board.
 
-1) Navigate to the Pi charm settings by clicking the four horizontal bars and making it to the "Settings" or use "ctrl + alt + s". 
-   ![[settings.png|250]]
+1) Navigate to the Pi charm settings by clicking the four horizontal bars and making it to the "Settings" or use "ctrl + alt + s".
+
+<img src="./Resources/settings.png" width="200">
+
 2) Now Select your project drop down from the left hand list. Click "Python Interpreter". Select "Add Interpreter" on the right of the window followed by "On SSH" (Disregard the improper highlighting of "Add Local Interpreter").
-   ![[Interpreter.png]]
+
+<img src="./Resources/Interpreter.png">
+
 3) Fill in the host, port, username. Follow the guided prompt to finish adding the SSH connection and navigate to your python interpreter located on local device. On Ubuntu Server it's typically located at `/usr/bin/python3`.
+
 4) Now you're set up to execute code remotely!
 
 #### Step Two
@@ -107,7 +110,8 @@ while repeat:
 ```
 #### Step 6
 Recording of the pulsing effect:
-![[Module_One_Proof.mp4]]
+[Watch on YouTube](https://youtu.be/k6XtSIeu3ls)
+
 
 #### Lab Questions
 1) **At what frequency can you see the LED start to blink?**
