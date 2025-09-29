@@ -23,14 +23,14 @@ from time import sleep
 ##
 ## These are the packages that we need to pull in so that we can work
 ## with the GPIO interface on the Raspberry Pi board and work with
-## the 16x2 LCD display
+## the 16x2 LCD.
 ##
 import board
 import digitalio
 import adafruit_character_lcd.character_lcd as characterlcd
 
 ##
-## cleanupDisplay - Method used to cleanup the digitalIO lines that
+## cleanupDisplay - Method used to clean up the digitalIO lines that
 ## are used to run the display.
 ##
 ## Arguments - lcd_rs, lcd_en, lcd_d4, lcd_d5, lcd_d6, lcd_d7 as
@@ -52,7 +52,7 @@ lcd_columns = 16
 lcd_rows = 2
 
 ##
-## Setup the six GPIO lines to communicate with the display.
+## Set up the six GPIO lines to communicate with the display.
 ## This leverages the digitalio class to handle digital 
 ## outputs on the GPIO lines. There is also an analagous
 ## class for analog IO.
@@ -88,9 +88,9 @@ while repeat:
         ## lcd_line_1 = 'Happy\n' in order to set the 
         ## first line of the display to represent the date
         ## and time. Month, Day, Hour, Minute, Second
-        ## lcd_line_1 = datetime.now().strftime('%b %d  %H:%M:%S\n')
-        lcd_line_1 = 'Happy\n'
-        lcd_line_2 = 'Display Day!'
+        lcd_line_1 = datetime.now().strftime('%b %d  %H:%M:%S\n')
+        #lcd_line_1 = 'Embedded is Fun!\n'
+        lcd_line_2 = '- Cade Bray'
 
         # combine both lines into one update to the display
         lcd.message = lcd_line_1 + lcd_line_2
