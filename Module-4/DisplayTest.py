@@ -5,13 +5,13 @@
 # This code works with the test circuit that was built for the 
 # Module 4 Lab.
 #
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 # Change History
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 # Version   |   Description
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 #    1          Initial Development
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 
 ##
 ## We need to pull in the datetime and sleep objects so that we can 
@@ -29,6 +29,7 @@ import board
 import digitalio
 import adafruit_character_lcd.character_lcd as characterlcd
 
+
 ##
 ## cleanupDisplay - Method used to clean up the digitalIO lines that
 ## are used to run the display.
@@ -45,7 +46,7 @@ def cleanupDisplay(a, b, c, d, e, f):
     d.deinit()
     e.deinit()
     f.deinit()
-    
+
 
 # Modify this if you have a different sized character LCD
 lcd_columns = 16
@@ -89,7 +90,7 @@ while repeat:
         ## first line of the display to represent the date
         ## and time. Month, Day, Hour, Minute, Second
         lcd_line_1 = datetime.now().strftime('%b %d  %H:%M:%S\n')
-        #lcd_line_1 = 'Embedded is Fun!\n'
+        # lcd_line_1 = 'Embedded is Fun!\n'
         lcd_line_2 = '- Cade Bray'
 
         # combine both lines into one update to the display
