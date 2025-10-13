@@ -20,6 +20,7 @@
 #    1          Initial Development
 #    2          CB - Revised file to adhere to PEP requirements on
 #                    documentation and docstrings.
+#    3          CB - Adjusted process button to toggle temp unit.
 #------------------------------------------------------------------
 
 #Imports required to handle our Button, and our LED devices
@@ -100,7 +101,7 @@ class ManagedDisplay:
         self.lcd.clear()
         self.lcd.message = message
 
-    ## End class ManagedDisplay definition  
+    # End class ManagedDisplay definition
     
 
 class TempMachine(StateMachine):
@@ -109,7 +110,7 @@ class TempMachine(StateMachine):
     necessary state to display temperature information in Celsius or Fahrenheit
     """
 
-    ## Our two LEDs, utilizing GPIO 18, and GPIO 23
+    # Our two LEDs, utilizing GPIO 18, and GPIO 23
     redLight = LED(18)
     blueLight = LED(23)
 
@@ -157,6 +158,13 @@ class TempMachine(StateMachine):
         swap between Fahrenheit and Celsius output
         """
         print('*** processButton')
+
+        # Toggle temp unit
+        if self.activeScale == self.scale1:
+            self.activeScale = self.scale2
+        else:
+            self.activeScale = self.scale1
+
         self.send("cycle")
 
     def run(self):
