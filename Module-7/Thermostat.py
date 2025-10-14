@@ -1,18 +1,18 @@
-#------------------------------------------------------------------
-# Change History
-#------------------------------------------------------------------
-# Version   |   Description
-#------------------------------------------------------------------
-#    1          Initial Development
-#
-#    2          CB - Revised document to follow PEP industry best
-#               practices with documentation
-#
-#    3          CB - Implemented logic per the system requirements.
-#
-#    4          CB - Revisited documentation again and cleaned up
-#               the file for readability.
-#------------------------------------------------------------------
+#------------------------------------------------------------------#
+# Change History                                                   #
+#------------------------------------------------------------------#
+# Version   |   Description                                        #
+#------------------------------------------------------------------#
+#    1          Initial Development                                #
+#                                                                  #
+#    2          CB - Revised document to follow PEP industry best  #
+#               practices with documentation                       #
+#                                                                  #
+#    3          CB - Implemented logic per the system requirements.#
+#                                                                  #
+#    4          CB - Revisited documentation again and cleaned up  #
+#               the file for readability.                          #
+#------------------------------------------------------------------#
 
 # Import necessary to provide timing in the main loop
 from time import sleep
