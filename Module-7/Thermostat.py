@@ -297,8 +297,7 @@ class TemperatureMachine(StateMachine):
         my_thread = Thread(target=self.manage_my_display)
         my_thread.start()
 
-    @staticmethod
-    def get_fahrenheit():
+    def get_fahrenheit(self):
         """
         Get the temperature in Fahrenheit
         """
