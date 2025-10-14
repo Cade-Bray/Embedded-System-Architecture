@@ -51,7 +51,6 @@ while repeat:
                 # This also decodes the result into an utf-8 String (utf-8 is the
                 # default North American English character set) and
                 # normalizes the input to lower case.
-                #
                 # This will block until data is available
                 dataline = ((ser.readline()).decode("utf-8")).lower()
 

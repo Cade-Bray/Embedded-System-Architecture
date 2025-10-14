@@ -35,7 +35,7 @@ i2c = board.I2C()
 thSensor = adafruit_ahtx0.AHTx0(i2c)
 
 ##
-## Setup the flag that will control our main loop
+## Set up the flag that will control our main loop
 ##
 repeat = True
 
