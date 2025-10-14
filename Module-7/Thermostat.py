@@ -1,39 +1,3 @@
-# Thermostat - This is the Python code used to demonstrate
-# the functionality of the thermostat that we have prototyped throughout
-# the course. 
-#
-# This code works with the test circuit that was built for module 7.
-#
-# Functionality:
-# The thermostat has three states: off, heat, cool
-
-# The lights will represent the state that the thermostat is in.
-
-# If the thermostat is set to off, the lights will both be off.
-
-# If the thermostat is set to heat, the Red LED will be fading in 
-# and out if the current temperature is blow the set temperature;
-# otherwise, the Red LED will be on solid.
-
-# If the thermostat is set to cool, the Blue LED will be fading in 
-# and out if the current temperature is above the set temperature;
-# otherwise, the Blue LED will be on solid.
-
-# One button will cycle through the three states of the thermostat.
-
-# One button will raise the setpoint by a degree.
-
-# One button will lower the setpoint by a degree.
-
-# The LCD will display the date and time on one line and
-# alternate the second line between the current temperature and 
-# the state of the thermostat along with its set temperature.
-
-# The Thermostat will send a status update to the TemperatureServer
-# over the serial port every 30 seconds in a comma-delimited string
-# including the state of the thermostat, the current temperature
-# in degrees Fahrenheit, and the setpoint of the thermostat.
-
 #------------------------------------------------------------------
 # Change History
 #------------------------------------------------------------------
@@ -45,6 +9,9 @@
 #               practices with documentation
 #
 #    3          CB - Implemented logic per the system requirements.
+#
+#    4          CB - Revisited documentation again and cleaned up
+#               the file for readability.
 #------------------------------------------------------------------
 
 # Import necessary to provide timing in the main loop
@@ -84,6 +51,7 @@ class ManagedDisplay:
     ManagedDisplay - Class intended to manage the 16x2 Display. This code is largely taken from the work done in module
     4, and converted into a class so that we can more easily consume the operational capabilities.
     """
+
     def __init__(self):
         """
         Set up the six GPIO lines to communicate with the display. This leverages the digitalio class to handle digital
@@ -162,7 +130,11 @@ class TemperatureMachine(StateMachine):
         """
         This is the class initializer. This will create the class variables needed. This design choice was made over
         defining the variables outside the init state so that garbage collection can be done quicker as we're not
-        defining off|heat|cool state declaration variables as class global variables.
+        defining off|heat|cool state declaration variables as class global variables. To fully utilize this state 
+        machine you need to create a medium such as GPIO buttons that have been given a when pressed function for the 
+        three processing triggers which are 'process_temp_state_button' for cycling states, 'process_temp_inc_button'
+        for processing a set point increment, and finally a 'process_temp_dec_button' for processing a set point
+        decrement. If you need an example look at the script at the bottom that is executed in this class's file.
 
         @param set_point defaulted to 72 degrees. Provide an integer as the default entry temp.
         @param DEBUG Default is true. Change for debugging statements to console to be toggled.
@@ -397,7 +369,6 @@ if __name__ == '__main__':
     tsm = TemperatureMachine()
     tsm.run()
 
-
     # Configure our green button to use GPIO 24 and to execute the method to cycle the thermostat when pressed.
     greenButton = Button(24)
     greenButton.when_pressed = tsm.process_temp_state_button
@@ -420,9 +391,8 @@ if __name__ == '__main__':
             sleep(30)
 
         except KeyboardInterrupt:
-            # Catch the keyboard interrupt (CTRL-C) and exit cleanly
-            # we do not need to manually clean up the GPIO pins, the
-            # gpiozero library handles that process.
+            # Catch the keyboard interrupt (CTRL-C) and exit cleanly we do not need to manually clean up the GPIO pins,
+            # the gpiozero library handles that process.
             print("Cleaning up. Exiting...")
 
             # Stop the loop
