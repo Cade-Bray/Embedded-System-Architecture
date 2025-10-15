@@ -63,7 +63,7 @@ redButton = Button(25)
 redButton.when_pressed = red_fade
 
 # Configure our Blue button to use GPIO 12 and to execute the blueFade method when pressed.
-blueButton = Button(16)
+blueButton = Button(12)
 blueButton.when_pressed = blue_fade
 
 # Setup our loop control flag

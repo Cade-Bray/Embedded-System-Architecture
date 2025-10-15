@@ -25,7 +25,6 @@ import serial
 # objects with dot notation.
 #
 # e.g. ser = serial.Serial
-#
 ser = serial.Serial(
         port='/dev/ttyUSB0', # This command assumes that the USB -> TTL cable
                              # is installed and the device that it uses is 

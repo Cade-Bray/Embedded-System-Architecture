@@ -14,23 +14,23 @@
 #               the file for readability.                          #
 #------------------------------------------------------------------#
 
+
+# This is needed to get coherent matching of temperatures.
+from math import floor
+
+# This package is necessary so that we can delegate the blinking lights to their own thread so that more work can be
+# done at the same time.
+from threading import Thread, Lock
+
 # Import necessary to provide timing in the main loop
 from time import sleep
 from datetime import datetime
 
-# Imports required to allow us to build a fully functional state machine
-from statemachine import StateMachine, State
-
 # Imports necessary to provide connectivity to the thermostat sensor and the I2C bus
 import board
-import adafruit_ahtx0
-
-# These are the packages that we need to pull in so that we can work with the GPIO interface on the Raspberry Pi board
-# and work with the 16x2 LCD
 
 # import board - already imported for I2C connectivity
 import digitalio
-import adafruit_character_lcd.character_lcd as characterlcd
 
 # This imports the Python serial package to handle communications over the Raspberry Pi's serial port.
 import serial
@@ -38,13 +38,13 @@ import serial
 # Imports required to handle our Button, and our PWMLED devices
 from gpiozero import Button, PWMLED
 
-# This package is necessary so that we can delegate the blinking lights to their own thread so that more work can be
-# done at the same time.
-from threading import Thread
+# Imports required to allow us to build a fully functional state machine
+from statemachine import StateMachine, State
 
-# This is needed to get coherent matching of temperatures.
-from math import floor
-
+# These are the packages that we need to pull in so that we can work with the GPIO interface on the Raspberry Pi board
+# and work with the 16x2 LCD
+import adafruit_ahtx0
+import adafruit_character_lcd.character_lcd as characterlcd
 
 class ManagedDisplay:
     """
@@ -126,35 +126,35 @@ class TemperatureMachine(StateMachine):
         - cool
     """
 
-    def __init__(self, set_point = 72, debugging = true):
+    # Class Attributes
+    off = State('off', initial=True)  # off - nothing lit up
+    heat = State('heat')              # red - only red LED fading in and out
+    cool = State('cool')              # blue - only blue LED fading in and out
+    cycle = (                         # cycle - event that provides the state machine behavior of transitioning between
+            off.to(heat)  |           # the three states of our thermostat
+            heat.to(cool) |
+            cool.to(off)
+    )
+
+    def __init__(self, set_point = 72, debugging = True):
         """
         This is the class initializer. This will create the class variables needed. This design choice was made over
-        defining the variables outside the init state so that garbage collection can be done quicker as we're not
-        defining off|heat|cool state declaration variables as class global variables. To fully utilize this state 
-        machine you need to create a medium such as GPIO buttons that have been given a when pressed function for the 
-        three processing triggers which are 'process_temp_state_button' for cycling states, 'process_temp_inc_button'
-        for processing a set point increment, and finally a 'process_temp_dec_button' for processing a set point
-        decrement. If you need an example look at the script at the bottom that is executed in this class's file.
+        defining the variables outside the init state so that garbage collection can be done quicker. To fully utilize
+        this state machine you need to create a medium such as GPIO buttons that have been given a when pressed function
+        for the three processing triggers which are 'process_temp_state_button' for cycling states,
+        'process_temp_inc_button' for processing a set point increment, and finally a 'process_temp_dec_button' for
+        processing a set point decrement. If you need an example look at the script at the bottom that is executed in
+        this class's file.
 
         @param set_point defaulted to 72 degrees. Provide an integer as the default entry temp.
         @param DEBUG Default is true. Change for debugging statements to console to be toggled.
         """
 
-        # Define the three states for our machine.
-        off = State(initial = True) #  off - nothing lit up
-        heat = State()              #  red - only red LED fading in and out
-        cool = State()              #  blue - only blue LED fading in and out
+        # Thread lock to ensure this multi thread project avoids resource sharing errors.
+        self.thread_lock = Lock()
 
         # Default temperature setPoint is 72 degrees Fahrenheit
         self.setPoint = set_point
-
-        # cycle - event that provides the state machine behavior of transitioning between the three states of our
-        # thermostat
-        self.cycle = (
-            off.to(heat) |
-            heat.to(cool) |
-            cool.to(off)
-        )
 
         # Continue display output
         self.endDisplay = False
@@ -166,16 +166,13 @@ class TemperatureMachine(StateMachine):
         # the other flags from the serial package, we need to reference those objects with dot notation.
         # e.g. ser = serial.Serial
         self.ser = serial.Serial(
-            port='/dev/ttyS0',             # This would be /dev/ttyAM0 prior to Raspberry Pi 3
+            port='/dev/ttyUSB0',           # Changed from ./ttyS0 (read) to /dev/ttyUSB0 (write)
             baudrate=115200,               # This sets the speed of the serial interface in bits/seconds
             parity=serial.PARITY_NONE,     # Disable parity
             stopbits=serial.STOPBITS_ONE,  # Serial protocol will use one stop bit
             bytesize=serial.EIGHTBITS,     # We are using 8-bit bytes
             timeout=1                      # Configure a 1-second timeout
         )
-
-        # Initialize our display
-        self.screen = ManagedDisplay()
 
         # Our two LEDs, utilizing GPIO 18, and GPIO 23
         self.redLight = PWMLED(18)
@@ -186,6 +183,9 @@ class TemperatureMachine(StateMachine):
 
         # Initialize our Temperature and Humidity sensor
         self.thSensor = adafruit_ahtx0.AHTx0(i2c)
+
+        # Run the init for the state machine
+        super().__init__(self)
 
     def on_enter_heat(self):
         """
@@ -301,20 +301,25 @@ class TemperatureMachine(StateMachine):
         """
         Get the temperature in Fahrenheit
         """
-        t = self.thSensor.temperature # Retrieves as Celsius.
-        return ((9 / 5) * t) + 32     # Convert to Fahrenheit
+        with self.thread_lock:
+            t = self.thSensor.temperature # Retrieves as Celsius.
+        return ((9 / 5) * t) + 32         # Convert to Fahrenheit
 
     def setup_serial_output(self):
         """
         Configure output string for the Thermostat Server
         """
         # System requirements called for the variable to be 'output' but that shadows a function.
-        return f'{self.current_state.id},{self.get_fahrenheit()}F,{self.setPoint}F'
+        return f'{self.current_state.id},{self.get_fahrenheit():0.1f}F,{self.setPoint}F\n'
 
     def manage_my_display(self):
         """
-        This function is designed to manage the LCD
+        This function is designed to manage the LCD. This function is operated on its own thread. Any function calls
+        to other threads need to be done through a thread lock, or you'll get an OS number 5 error.
         """
+
+        # Initialize our display. Brought here so it can be thread safe.
+        screen = ManagedDisplay()
         counter = 1
         alt_counter = 1
         while not self.endDisplay:
@@ -341,7 +346,7 @@ class TemperatureMachine(StateMachine):
                     alt_counter = 1
 
             # Update Display
-            self.screen.update_screen(lcd_line_1 + lcd_line_2)
+            screen.update_screen(lcd_line_1 + lcd_line_2)
 
             # Update server every 30 seconds
             if self.DEBUG:
@@ -356,7 +361,7 @@ class TemperatureMachine(StateMachine):
             sleep(1)
 
         # Cleanup display
-        self.screen.cleanup_display()
+        screen.cleanup_display()
 
     # End class TemperatureMachine definition
 
@@ -365,7 +370,7 @@ class TemperatureMachine(StateMachine):
 if __name__ == '__main__':
 
     # Set up our State Machine
-    tsm = TemperatureMachine()
+    tsm = TemperatureMachine(68, False)
     tsm.run()
 
     # Configure our green button to use GPIO 24 and to execute the method to cycle the thermostat when pressed.

@@ -21,7 +21,6 @@ import serial
 # objects with dot notation.
 #
 # e.g. ser = serial.Serial
-#
 ser = serial.Serial(
         port='/dev/ttyS0', # This would be /dev/ttyAM0 prior to Raspberry Pi 3
         baudrate = 115200, # This sets the speed of the serial interface in
