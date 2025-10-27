@@ -22,4 +22,6 @@ These recommendations are industry standard and are proven to promote readabilit
 Moving forward I'd like to explore working with microcontrollers as the implementation device instead of a single board 
 computer as I believe it could yield better outcomes in system performance as the overhead is reduced.
 
+Please visit this video demonstration to see what's been made in Module-7/Thermostat.py.
+
 https://youtu.be/PNeJJ2FwW3w
