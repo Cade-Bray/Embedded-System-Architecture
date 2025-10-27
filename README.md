@@ -1,6 +1,4 @@
 # Embedded System Architecture
-
----
 This project utilizes a raspberry pi or other single board computer, python-statemachine dependencies, and 
 a breakout board with a GPIO connector ribbon. This project creates a mock thermostat that utilizes a temperature and
 humidity sensor over I2C connections. The thermostat has a 16x2 display that outputs information for the user.
